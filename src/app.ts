@@ -2,13 +2,15 @@ import express from "express";
 import { connectDB } from "./config/database/database";
 import { env } from "./config/.env";
 import customerRoutes from "./routes/customers";
+import equipmentRoutes from "./routes/equipment.js";
 
 const app = express();
 
 app.use(express.json());
 
-// Use the customer routes for handling requests to /api/v1/customers
+// Define routes for customers and equipment
 app.use("/api/v1/customers", customerRoutes);
+app.use("/api/v1/equipment", equipmentRoutes);
 
 // Start the server and connect to the database
 const startServer = async (): Promise<void> => {
