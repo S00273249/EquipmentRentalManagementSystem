@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { z } from 'zod';
 
-// Define the TypeScript interface for Equipment
+// Define the TypeScript interface for Equipment Document
 export interface IEquipment {
     name: string;
     category: string;
@@ -37,7 +37,7 @@ export const createEquipmentZSchema = z.object({
     condition: z.string().min(1),
 });
 
-// Define Zod schema for validating equipment update data
+// Define Zod schema for validating equipment update data, allowing optional fields
 export const updateEquipmentZSchema = z.object({
     name: z.string().min(1).optional(),
     category: z.string().min(1).optional(),

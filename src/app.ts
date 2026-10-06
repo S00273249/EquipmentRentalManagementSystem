@@ -3,14 +3,16 @@ import { connectDB } from "./config/database/database";
 import { env } from "./config/.env";
 import customerRoutes from "./routes/customers";
 import equipmentRoutes from "./routes/equipment.js";
+import bookingRoutes from "./routes/bookings.js";
 
 const app = express();
 
 app.use(express.json());
 
-// Define routes for customers and equipment
+// Define routes for different resources
 app.use("/api/v1/customers", customerRoutes);
 app.use("/api/v1/equipment", equipmentRoutes);
+app.use("/api/v1/bookings", bookingRoutes);
 
 // Start the server and connect to the database
 const startServer = async (): Promise<void> => {

@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { z } from 'zod';
 
-// Define the TypeScript interface for a Customer
+// Define the TypeScript interface for a Customer Document
 export interface ICustomer {
     name: string;
     email: string;
@@ -31,7 +31,7 @@ export const createCustomerZSchema = z.object({
     address: z.string().min(1),
 });
 
-// Define Zod schema for validating customer update data
+// Define Zod schema for validating customer update data, allowing optional fields
 export const updateCustomerZSchema = z.object({
     name: z.string().min(1).optional(),
     email: z.string().email().optional(),
