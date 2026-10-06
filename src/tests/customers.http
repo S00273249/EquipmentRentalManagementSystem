@@ -1,0 +1,152 @@
+@endpoint = http://localhost:3000/api/v1/customers
+
+###
+
+# Create a customer
+# @name postACustomer
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "John Smith",
+    "email": "john@example.com",
+    "phone": "0871234567",
+    "address": "Sligo, Ireland"
+}
+
+###
+
+# Missing name
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+
+{
+    "email": "john@example.com",
+    "phone": "0871234567",
+    "address": "Sligo, Ireland"
+}
+
+###
+
+# Empty name
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "",
+    "email": "john@example.com",
+    "phone": "0871234567",
+    "address": "Sligo, Ireland"
+}
+
+###
+
+# Invalid email
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "John Smith",
+    "email": "not-an-email",
+    "phone": "0871234567",
+    "address": "Sligo, Ireland"
+}
+
+###
+
+# Missing phone
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "John Smith",
+    "email": "john@example.com",
+    "address": "Sligo, Ireland"
+}
+
+###
+
+# Missing address
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "John Smith",
+    "email": "john@example.com",
+    "phone": "0871234567"
+}
+
+###
+
+@newCustomer = {{postACustomer.response.body._id}}
+
+###
+
+# Get customer by ID
+GET {{endpoint}}/{{newCustomer}} HTTP/1.1
+content-type: application/json
+
+###
+
+# Get all customers
+GET {{endpoint}} HTTP/1.1
+content-type: application/json
+
+###
+
+# Valid update - all fields
+PUT {{endpoint}}/{{newCustomer}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "John Jones",
+    "email": "john.jones@example.com",
+    "phone": "0879876543",
+    "address": "Dublin, Ireland"
+}
+
+###
+
+# Valid update - name only
+PUT {{endpoint}}/{{newCustomer}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": "John Smith"
+}
+
+###
+
+# Valid update - email only
+PUT {{endpoint}}/{{newCustomer}} HTTP/1.1
+content-type: application/json
+
+{
+    "email": "john.smith@example.com"
+}
+
+###
+
+# Invalid update - empty name
+PUT {{endpoint}}/{{newCustomer}} HTTP/1.1
+content-type: application/json
+
+{
+    "name": ""
+}
+
+###
+
+# Invalid update - invalid email
+PUT {{endpoint}}/{{newCustomer}} HTTP/1.1
+content-type: application/json
+
+{
+    "email": "not-an-email"
+}
+
+###
+
+# Delete customer
+DELETE {{endpoint}}/{{newCustomer}} HTTP/1.1
+content-type: application/json
