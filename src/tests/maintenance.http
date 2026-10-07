@@ -1,0 +1,82 @@
+@endpoint = http://localhost:3000/api/v1/maintenance
+
+###
+
+# Create maintenance record
+# @name postMaintenance
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+
+# Replace "REPLACE_WITH_EQUIPMENT_ID" with a valid equipment ID from the database before running this request.
+{
+    "equipmentId": "REPLACE_WITH_EQUIPMENT_ID", 
+    "maintenanceType": "Repair",
+    "description": "Replace damaged lens",
+    "startDate": "2026-10-20",
+    "endDate": "2026-10-22",
+    "cost": 75,
+    "notes": "Equipment unavailable during repair"
+}
+
+###
+
+@newMaintenance = {{postMaintenance.response.body._id}}
+
+###
+
+# Get maintenance record by ID
+GET {{endpoint}}/{{newMaintenance}} HTTP/1.1
+content-type: application/json
+
+###
+
+# Get all maintenance records
+GET {{endpoint}} HTTP/1.1
+content-type: application/json
+
+###
+
+# Valid update - cost only
+PUT {{endpoint}}/{{newMaintenance}} HTTP/1.1
+content-type: application/json
+
+{
+    "cost": 100
+}
+
+###
+
+# Valid update - dates
+PUT {{endpoint}}/{{newMaintenance}} HTTP/1.1
+content-type: application/json
+
+{
+    "startDate": "2026-10-21",
+    "endDate": "2026-10-23"
+}
+
+###
+
+# Invalid update - negative cost
+PUT {{endpoint}}/{{newMaintenance}} HTTP/1.1
+content-type: application/json
+
+{
+    "cost": -20
+}
+
+###
+
+# Invalid update - wrong cost type
+PUT {{endpoint}}/{{newMaintenance}} HTTP/1.1
+content-type: application/json
+
+{
+    "cost": "100"
+}
+
+###
+
+# Delete maintenance record
+DELETE {{endpoint}}/{{newMaintenance}} HTTP/1.1
+content-type: application/json
