@@ -1,6 +1,8 @@
 import { Schema, model } from 'mongoose';
 import { z } from 'zod';
 
+// #region Booking Interface
+
 // Define the TypeScript interface for a Booking document
 export interface IBooking {
     customerId: string;
@@ -11,6 +13,10 @@ export interface IBooking {
     dailyRate: number;
     totalCost: number;
 }
+
+// #endregion
+
+// #region Booking Schema and Model
 
 // Define the Mongoose schema for the Booking model
 const bookingSchema = new Schema<IBooking>(
@@ -29,6 +35,10 @@ const bookingSchema = new Schema<IBooking>(
 // Create the Booking model using the defined schema
 export const BookingModel = model<IBooking>('Booking', bookingSchema);
 
+// #endregion
+
+// #region Zod Schemas for Validation
+
 // Define Zod schemas for validating booking data
 export const createBookingZSchema = z.object({
     customerId: z.string().min(1),
@@ -36,8 +46,6 @@ export const createBookingZSchema = z.object({
     startDate: z.coerce.date(),
     endDate: z.coerce.date(),
     status: z.string().min(1),
-    dailyRate: z.number().positive(),
-    totalCost: z.number().positive(),
 });
 
 // Define Zod schema for updating booking data, allowing optional fields
@@ -47,6 +55,6 @@ export const updateBookingZSchema = z.object({
     startDate: z.coerce.date().optional(),
     endDate: z.coerce.date().optional(),
     status: z.string().min(1).optional(),
-    dailyRate: z.number().positive().optional(),
-    totalCost: z.number().positive().optional(),
 });
+
+// #endregion
