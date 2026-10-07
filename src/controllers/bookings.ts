@@ -1,4 +1,3 @@
-import { createBookingZSchema, updateBookingZSchema } from '../models/bookings.js';
 import { Request, Response } from 'express';
 import { BookingService } from '../services/bookings.js';
 
@@ -51,16 +50,6 @@ export class BookingController {
     createBooking = async (req: Request, res: Response): Promise<void> => {
         try {
 
-            const validation = createBookingZSchema.safeParse(req.body);
-
-            if (!validation.success) {
-                res.status(400).json({
-                    message: 'Invalid booking data',
-                    errors: validation.error.issues
-                });
-                return;
-            }
-
             const newBooking = await bookingService.createBooking(req.body);
             res.status(201).json(newBooking);
 
@@ -76,16 +65,6 @@ export class BookingController {
     // Update an existing booking
     updateBooking = async (req: Request, res: Response): Promise<void> => {
         try {
-
-            const validation = updateBookingZSchema.safeParse(req.body);
-
-            if (!validation.success) {
-                res.status(400).json({
-                    message: 'Invalid booking data',
-                    errors: validation.error.issues
-                });
-                return;
-            }
 
             const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
             const updatedBooking = await bookingService.updateBooking(id, req.body);
