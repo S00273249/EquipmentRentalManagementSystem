@@ -5,23 +5,35 @@ const maintenanceService = new MaintenanceService();
 
 export class MaintenanceController {
 
+    // #region Get All Maintenance Records
+
     // Get all maintenance records
-    getMaintenanceRecords = async (_req: Request, res: Response): Promise<void> => {
+    getMaintenanceRecords = async (req: Request, res: Response): Promise<void> => {
         try {
 
-            const maintenanceRecords =
-                await maintenanceService.getAllMaintenanceRecords();
+            // Extract query parameters for filtering maintenance records
+            const maintenanceRecords = await maintenanceService.getAllMaintenanceRecords({
+                equipmentId: typeof req.query.equipmentId === 'string'
+                    ? req.query.equipmentId
+                    : undefined
+            });
 
+            // Return the filtered maintenance records as a JSON response
             res.status(200).json(maintenanceRecords);
 
         } catch (error) {
 
+            // Return a 500 Internal Server Error response if an error occurs
             res.status(500).json({
                 message: 'Error fetching maintenance records',
                 error
             });
         }
     };
+
+    // #endregion
+
+    // #region Get Maintenance Record By ID
 
     // Get a maintenance record by ID
     getMaintenanceRecordById = async (
@@ -55,6 +67,10 @@ export class MaintenanceController {
         }
     };
 
+    // #endregion
+
+    // #region Create Records
+
     // Create a new maintenance record
     createMaintenanceRecord = async (
         req: Request,
@@ -75,6 +91,10 @@ export class MaintenanceController {
             });
         }
     };
+
+    // #endregion
+
+    // #region Update Records
 
     // Update an existing maintenance record
     updateMaintenanceRecord = async (
@@ -111,6 +131,10 @@ export class MaintenanceController {
         }
     };
 
+    // #endregion
+
+    // #region Delete Records
+
     // Delete a maintenance record by ID
     deleteMaintenanceRecord = async (
         req: Request,
@@ -142,5 +166,7 @@ export class MaintenanceController {
             });
         }
     };
+
+    // #endregion
 
 }

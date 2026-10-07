@@ -93,6 +93,11 @@ x-api-key: blahblah
 }
 
 ###
+# Filter maintenance records by equipment
+GET {{endpoint}}?equipmentId={{equipmentId}} HTTP/1.1
+x-api-key: blahblah
+
+###
 # Delete maintenance record
 DELETE {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json

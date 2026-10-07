@@ -180,6 +180,26 @@ x-api-key: blahblah
 }
 
 ###
+# Filter bookings by customer
+GET {{endpoint}}?customerId={{customerId}} HTTP/1.1
+x-api-key: blahblah
+
+###
+# Filter bookings by equipment
+GET {{endpoint}}?equipmentId={{equipmentId}} HTTP/1.1
+x-api-key: blahblah
+
+###
+# Filter bookings by status
+GET {{endpoint}}?status=Confirmed HTTP/1.1
+x-api-key: blahblah
+
+###
+# Filter bookings by multiple fields
+GET {{endpoint}}?equipmentId={{equipmentId}}&status=Confirmed HTTP/1.1
+x-api-key: blahblah
+
+###
 # Delete second booking
 DELETE {{endpoint}}/{{secondBooking}} HTTP/1.1
 x-api-key: blahblah

@@ -8,10 +8,33 @@ export class BookingService {
 
     // #region Get All Bookings
 
-    // Fetch all bookings from the database
-    async getAllBookings(): Promise<IBooking[]> {
-        return await BookingModel.find().lean(); 
-    } // Use 'lean()' to return a plain JavaScript object instead of a Mongoose document
+    // Fetch all bookings with optional filters for customer ID, equipment ID, and status
+    async getAllBookings(filters: {
+        customerId?: string;
+        equipmentId?: string;
+        status?: string;
+    }): Promise<IBooking[]> {
+
+        // Create a query object to hold the filters for the database query
+        const query: Record<string, string> = {};
+
+        // If a filter is provided, add it to the query object
+        if (filters.customerId) {
+            query.customerId = filters.customerId;
+        }
+
+        if (filters.equipmentId) {
+            query.equipmentId = filters.equipmentId;
+        }
+
+        if (filters.status) {
+            query.status = filters.status;
+        }
+
+        // Execute the query to find bookings that match the filters 
+        // and .lean to return plain JavaScript objects instead of Mongoose documents
+        return await BookingModel.find(query).lean();
+    } 
 
     // #endregion
 
