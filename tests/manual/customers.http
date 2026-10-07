@@ -6,6 +6,7 @@
 # @name postACustomer
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "John Smith",
@@ -19,6 +20,7 @@ content-type: application/json
 # Missing name
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "email": "john@example.com",
@@ -31,6 +33,7 @@ content-type: application/json
 # Empty name
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "",
@@ -44,6 +47,7 @@ content-type: application/json
 # Invalid email
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "John Smith",
@@ -57,6 +61,7 @@ content-type: application/json
 # Missing phone
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "John Smith",
@@ -69,6 +74,7 @@ content-type: application/json
 # Missing address
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "John Smith",
@@ -85,18 +91,21 @@ content-type: application/json
 # Get customer by ID
 GET {{endpoint}}/{{newCustomer}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 ###
 
 # Get all customers
 GET {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 ###
 
 # Valid update - all fields
 PUT {{endpoint}}/{{newCustomer}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "John Jones",
@@ -110,6 +119,7 @@ content-type: application/json
 # Valid update - name only
 PUT {{endpoint}}/{{newCustomer}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "John Smith"
@@ -120,6 +130,7 @@ content-type: application/json
 # Valid update - email only
 PUT {{endpoint}}/{{newCustomer}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "email": "john.smith@example.com"
@@ -130,6 +141,7 @@ content-type: application/json
 # Invalid update - empty name
 PUT {{endpoint}}/{{newCustomer}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": ""
@@ -140,6 +152,7 @@ content-type: application/json
 # Invalid update - invalid email
 PUT {{endpoint}}/{{newCustomer}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "email": "not-an-email"
@@ -150,3 +163,4 @@ content-type: application/json
 # Delete customer
 DELETE {{endpoint}}/{{newCustomer}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah

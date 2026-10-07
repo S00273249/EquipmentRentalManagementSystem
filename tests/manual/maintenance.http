@@ -6,6 +6,7 @@
 # @name postMaintenance
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 # Replace "REPLACE_WITH_EQUIPMENT_ID" with a valid equipment ID from the database before running this request.
 {
@@ -27,18 +28,21 @@ content-type: application/json
 # Get maintenance record by ID
 GET {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 ###
 
 # Get all maintenance records
 GET {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 ###
 
 # Valid update - cost only
 PUT {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "cost": 100
@@ -49,6 +53,7 @@ content-type: application/json
 # Valid update - dates
 PUT {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "startDate": "2026-10-21",
@@ -60,6 +65,7 @@ content-type: application/json
 # Invalid update - negative cost
 PUT {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "cost": -20
@@ -70,6 +76,7 @@ content-type: application/json
 # Invalid update - wrong cost type
 PUT {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "cost": "100"
@@ -80,3 +87,4 @@ content-type: application/json
 # Delete maintenance record
 DELETE {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah

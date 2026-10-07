@@ -1,4 +1,3 @@
-import { createCustomerZSchema, updateCustomerZSchema } from '../models/customers.js';
 import { Request, Response } from 'express';
 import { CustomerService } from '../services/customers.js';
 
@@ -51,16 +50,6 @@ export class CustomerController {
     createCustomer = async (req: Request, res: Response): Promise<void> => {
         try {
 
-            const validation = createCustomerZSchema.safeParse(req.body);
-
-            if (!validation.success) {
-                res.status(400).json({
-                    message: 'Invalid customer data',
-                    errors: validation.error.issues
-                });
-                return;
-            }
-
             const newCustomer = await customerService.createCustomer(req.body);
             res.status(201).json(newCustomer);
 
@@ -76,16 +65,6 @@ export class CustomerController {
     // Update an existing customer
     updateCustomer = async (req: Request, res: Response): Promise<void> => {
         try {
-
-            const validation = updateCustomerZSchema.safeParse(req.body);
-
-            if (!validation.success) {
-                res.status(400).json({
-                    message: 'Invalid customer data',
-                    errors: validation.error.issues
-                });
-                return;
-            }
 
             const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
             const updatedCustomer = await customerService.updateCustomer(id, req.body);

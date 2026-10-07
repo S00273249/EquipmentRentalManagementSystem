@@ -1,4 +1,3 @@
-import { createEquipmentZSchema, updateEquipmentZSchema } from '../models/equipment.js';
 import { Request, Response } from 'express';
 import { EquipmentService } from '../services/equipment.js';
 
@@ -51,16 +50,6 @@ export class EquipmentController {
     createEquipment = async (req: Request, res: Response): Promise<void> => {
         try {
 
-            const validation = createEquipmentZSchema.safeParse(req.body);
-
-            if (!validation.success) {
-                res.status(400).json({
-                    message: 'Invalid equipment data',
-                    errors: validation.error.issues
-                });
-                return;
-            }
-
             const newEquipment = await equipmentService.createEquipment(req.body);
             res.status(201).json(newEquipment);
 
@@ -76,16 +65,6 @@ export class EquipmentController {
     // Update existing equipment
     updateEquipment = async (req: Request, res: Response): Promise<void> => {
         try {
-
-            const validation = updateEquipmentZSchema.safeParse(req.body);
-
-            if (!validation.success) {
-                res.status(400).json({
-                    message: 'Invalid equipment data',
-                    errors: validation.error.issues
-                });
-                return;
-            }
 
             const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
             const updatedEquipment = await equipmentService.updateEquipment(id, req.body);

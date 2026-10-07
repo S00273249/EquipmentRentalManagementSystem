@@ -1,5 +1,8 @@
 import { Router } from 'express';
-import { CustomerController } from '../controllers/customers.js';
+import { CustomerController } from '../controllers/customers';
+import { authenticateKey } from '../middleware/authentication.middleware';
+import { validate } from '../middleware/validate.middleware';
+import { createCustomerZSchema, updateCustomerZSchema } from '../models/customers';
 
 // Create a new router instance
 const router = Router();
@@ -7,10 +10,10 @@ const router = Router();
 const customerController = new CustomerController();
 
 // Define the routes for customer operations
-router.get('/', customerController.getCustomers);
-router.get('/:id', customerController.getCustomerById);
-router.post('/', customerController.createCustomer);
-router.put('/:id', customerController.updateCustomer);
-router.delete('/:id', customerController.deleteCustomer);
+router.get('/', authenticateKey, customerController.getCustomers);
+router.get('/:id', authenticateKey, customerController.getCustomerById);
+router.post('/', authenticateKey, validate(createCustomerZSchema), customerController.createCustomer);
+router.put('/:id', authenticateKey, validate(updateCustomerZSchema), customerController.updateCustomer);
+router.delete('/:id', authenticateKey, customerController.deleteCustomer);
 
 export default router;

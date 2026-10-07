@@ -6,6 +6,7 @@
 # @name postEquipment
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "Canon EOS Camera",
@@ -21,6 +22,7 @@ content-type: application/json
 # Missing name
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "category": "Camera",
@@ -35,6 +37,7 @@ content-type: application/json
 # Empty name
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "",
@@ -50,6 +53,7 @@ content-type: application/json
 # Missing daily rate
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "Canon EOS Camera",
@@ -64,6 +68,7 @@ content-type: application/json
 # Invalid daily rate
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "Canon EOS Camera",
@@ -79,6 +84,7 @@ content-type: application/json
 # Wrong type for daily rate
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "Canon EOS Camera",
@@ -98,18 +104,21 @@ content-type: application/json
 # Get equipment by ID
 GET {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 ###
 
 # Get all equipment
 GET {{endpoint}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 ###
 
 # Valid update - all fields
 PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "Canon EOS R5",
@@ -125,6 +134,7 @@ content-type: application/json
 # Valid update - name only
 PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": "Canon EOS R6"
@@ -135,6 +145,7 @@ content-type: application/json
 # Valid update - daily rate only
 PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "dailyRate": 60
@@ -145,6 +156,7 @@ content-type: application/json
 # Invalid update - empty name
 PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "name": ""
@@ -155,6 +167,7 @@ content-type: application/json
 # Invalid update - negative daily rate
 PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "dailyRate": -20
@@ -165,6 +178,7 @@ content-type: application/json
 # Invalid update - daily rate is a string
 PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah
 
 {
     "dailyRate": "60"
@@ -175,3 +189,4 @@ content-type: application/json
 # Delete equipment
 DELETE {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
+x-api-key: blahblah

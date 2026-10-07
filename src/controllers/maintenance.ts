@@ -1,4 +1,3 @@
-import { createMaintenanceZSchema, updateMaintenanceZSchema } from '../models/maintenance.js';
 import { Request, Response } from 'express';
 import { MaintenanceService } from '../services/maintenance.js';
 
@@ -63,17 +62,6 @@ export class MaintenanceController {
     ): Promise<void> => {
         try {
 
-            const validation =
-                createMaintenanceZSchema.safeParse(req.body);
-
-            if (!validation.success) {
-                res.status(400).json({
-                    message: 'Invalid maintenance data',
-                    errors: validation.error.issues
-                });
-                return;
-            }
-
             const newMaintenanceRecord =
                 await maintenanceService.createMaintenanceRecord(req.body);
 
@@ -94,17 +82,6 @@ export class MaintenanceController {
         res: Response
     ): Promise<void> => {
         try {
-
-            const validation =
-                updateMaintenanceZSchema.safeParse(req.body);
-
-            if (!validation.success) {
-                res.status(400).json({
-                    message: 'Invalid maintenance data',
-                    errors: validation.error.issues
-                });
-                return;
-            }
 
             const id = Array.isArray(req.params.id)
                 ? req.params.id[0]
