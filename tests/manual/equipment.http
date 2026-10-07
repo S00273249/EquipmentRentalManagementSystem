@@ -1,7 +1,6 @@
 @endpoint = http://localhost:3000/api/v1/equipment
 
 ###
-
 # Create equipment
 # @name postEquipment
 POST {{endpoint}} HTTP/1.1
@@ -18,7 +17,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Missing name
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
@@ -33,7 +31,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Empty name
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
@@ -49,7 +46,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Missing daily rate
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
@@ -64,7 +60,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Invalid daily rate
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
@@ -80,7 +75,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Wrong type for daily rate
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
@@ -96,25 +90,21 @@ x-api-key: blahblah
 }
 
 ###
-
 @newEquipment = {{postEquipment.response.body._id}}
 
 ###
-
 # Get equipment by ID
 GET {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
 ###
-
 # Get all equipment
 GET {{endpoint}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
 ###
-
 # Valid update - all fields
 PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
@@ -130,7 +120,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Valid update - name only
 PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
@@ -141,7 +130,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Valid update - daily rate only
 PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
@@ -152,7 +140,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Invalid update - empty name
 PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
@@ -163,7 +150,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Invalid update - negative daily rate
 PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
@@ -174,7 +160,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Invalid update - daily rate is a string
 PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json
@@ -185,7 +170,51 @@ x-api-key: blahblah
 }
 
 ###
+# Filter equipment by category
+GET {{endpoint}}/search?category=Camera HTTP/1.1
+x-api-key: blahblah
 
+###
+# Filter equipment by status
+GET {{endpoint}}/search?status=Available HTTP/1.1
+x-api-key: blahblah
+
+###
+# Filter equipment by condition
+GET {{endpoint}}/search?condition=Good HTTP/1.1
+x-api-key: blahblah
+
+###
+# Filter equipment by multiple fields
+GET {{endpoint}}/search?category=Camera&status=Available HTTP/1.1
+x-api-key: blahblah
+
+###
+# Sort equipment by daily rate
+GET {{endpoint}}/search?sort=dailyRate HTTP/1.1
+x-api-key: blahblah
+
+###
+# Find available equipment for a rental period
+GET {{endpoint}}/available?from=2026-10-10&to=2026-10-15 HTTP/1.1
+x-api-key: blahblah
+
+###
+# Invalid availability dates
+GET {{endpoint}}/available?from=2026-10-15&to=2026-10-10 HTTP/1.1
+x-api-key: blahblah
+
+###
+# Invalid availability date format
+GET {{endpoint}}/available?from=not-a-date&to=2026-10-15 HTTP/1.1
+x-api-key: blahblah
+
+###
+# Search equipment with no filters
+GET {{endpoint}}/search HTTP/1.1
+x-api-key: blahblah
+
+###
 # Delete equipment
 DELETE {{endpoint}}/{{newEquipment}} HTTP/1.1
 content-type: application/json

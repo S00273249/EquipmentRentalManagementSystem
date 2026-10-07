@@ -11,6 +11,8 @@ const equipmentController = new EquipmentController();
 
 // Define the routes for equipment operations
 router.get('/', authenticateKey, equipmentController.getEquipment);
+router.get('/search', authenticateKey, equipmentController.getFilteredEquipment);
+router.get('/available', authenticateKey, equipmentController.getAvailableEquipment);
 router.get('/:id', authenticateKey, equipmentController.getEquipmentById);
 router.post('/', authenticateKey, validate(createEquipmentZSchema), equipmentController.createEquipment);
 router.put('/:id', authenticateKey, validate(updateEquipmentZSchema), equipmentController.updateEquipment);
