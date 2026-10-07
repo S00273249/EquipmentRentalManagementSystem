@@ -1,0 +1,190 @@
+@endpoint = http://localhost:3000/api/v1/bookings
+
+###
+# Create a customer for booking tests
+# @name postCustomer
+POST http://localhost:3000/api/v1/customers HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "name": "Booking Test Customer",
+    "email": "booking@example.com",
+    "phone": "0871111111",
+    "address": "Sligo, Ireland"
+}
+
+###
+# Create equipment for booking tests
+# @name postEquipment
+POST http://localhost:3000/api/v1/equipment HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "name": "Booking Test Camera",
+    "category": "Camera",
+    "description": "Camera used for booking tests",
+    "dailyRate": 50,
+    "status": "Available",
+    "condition": "Good"
+}
+
+###
+@customerId = {{postCustomer.response.body._id}}
+@equipmentId = {{postEquipment.response.body._id}}
+
+###
+# Create a booking
+# @name postABooking
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "customerId": "{{customerId}}",
+    "equipmentId": "{{equipmentId}}",
+    "startDate": "2026-10-10",
+    "endDate": "2026-10-15",
+    "status": "Pending"
+}
+
+###
+@newBooking = {{postABooking.response.body._id}}
+
+###
+# Get booking by ID
+GET {{endpoint}}/{{newBooking}} HTTP/1.1
+x-api-key: blahblah
+
+###
+# Get all bookings
+GET {{endpoint}} HTTP/1.1
+x-api-key: blahblah
+
+###
+# Attempt overlapping booking
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "customerId": "{{customerId}}",
+    "equipmentId": "{{equipmentId}}",
+    "startDate": "2026-10-12",
+    "endDate": "2026-10-18",
+    "status": "Pending"
+}
+
+###
+# Create maintenance for the test equipment
+# @name postMaintenance
+POST http://localhost:3000/api/v1/maintenance HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "equipmentId": "{{equipmentId}}",
+    "maintenanceType": "Repair",
+    "description": "Camera maintenance test",
+    "startDate": "2026-11-10",
+    "endDate": "2026-11-15",
+    "cost": 100,
+    "notes": "Test maintenance period"
+}
+
+###
+# Attempt booking during maintenance
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "customerId": "{{customerId}}",
+    "equipmentId": "{{equipmentId}}",
+    "startDate": "2026-11-12",
+    "endDate": "2026-11-14",
+    "status": "Pending"
+}
+
+###
+# Create a second booking for update overlap testing
+# @name postSecondBooking
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "customerId": "{{customerId}}",
+    "equipmentId": "{{equipmentId}}",
+    "startDate": "2026-11-20",
+    "endDate": "2026-11-25",
+    "status": "Pending"
+}
+
+###
+@secondBooking = {{postSecondBooking.response.body._id}}
+
+###
+# Valid update - status
+PUT {{endpoint}}/{{newBooking}} HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "status": "Confirmed"
+}
+
+###
+# Invalid update - end date before start date
+PUT {{endpoint}}/{{newBooking}} HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "startDate": "2026-10-20",
+    "endDate": "2026-10-15"
+}
+
+###
+# Invalid update - overlapping booking
+PUT {{endpoint}}/{{newBooking}} HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "startDate": "2026-11-22",
+    "endDate": "2026-11-27"
+}
+
+###
+# Invalid update - maintenance conflict
+PUT {{endpoint}}/{{newBooking}} HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "startDate": "2026-11-12",
+    "endDate": "2026-11-14"
+}
+
+###
+# Valid update - dates
+PUT {{endpoint}}/{{newBooking}} HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "startDate": "2026-12-01",
+    "endDate": "2026-12-06"
+}
+
+###
+# Delete second booking
+DELETE {{endpoint}}/{{secondBooking}} HTTP/1.1
+x-api-key: blahblah
+
+###
+# Delete booking
+DELETE {{endpoint}}/{{newBooking}} HTTP/1.1
+x-api-key: blahblah

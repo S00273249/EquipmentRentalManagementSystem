@@ -1,16 +1,33 @@
 @endpoint = http://localhost:3000/api/v1/maintenance
 
 ###
+# Create equipment for maintenance tests
+# @name postEquipment
+POST http://localhost:3000/api/v1/equipment HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
 
+{
+    "name": "Maintenance Test Equipment",
+    "category": "Tool",
+    "description": "Equipment used for maintenance tests",
+    "dailyRate": 40,
+    "status": "Available",
+    "condition": "Good"
+}
+
+###
+@equipmentId = {{postEquipment.response.body._id}}
+
+###
 # Create maintenance record
 # @name postMaintenance
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
-# Replace "REPLACE_WITH_EQUIPMENT_ID" with a valid equipment ID from the database before running this request.
 {
-    "equipmentId": "REPLACE_WITH_EQUIPMENT_ID", 
+    "equipmentId": "{{equipmentId}}",
     "maintenanceType": "Repair",
     "description": "Replace damaged lens",
     "startDate": "2026-10-20",
@@ -20,25 +37,21 @@ x-api-key: blahblah
 }
 
 ###
-
 @newMaintenance = {{postMaintenance.response.body._id}}
 
 ###
-
 # Get maintenance record by ID
 GET {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
 ###
-
 # Get all maintenance records
 GET {{endpoint}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
 ###
-
 # Valid update - cost only
 PUT {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json
@@ -49,7 +62,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Valid update - dates
 PUT {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json
@@ -61,7 +73,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Invalid update - negative cost
 PUT {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json
@@ -72,7 +83,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Invalid update - wrong cost type
 PUT {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json
@@ -83,7 +93,6 @@ x-api-key: blahblah
 }
 
 ###
-
 # Delete maintenance record
 DELETE {{endpoint}}/{{newMaintenance}} HTTP/1.1
 content-type: application/json

@@ -54,10 +54,10 @@ export class BookingController {
             res.status(201).json(newBooking);
 
         } catch (error) {
+            const message = error instanceof Error ? error.message : 'Unknown error';
 
-            res.status(500).json({
-                message: 'Error inserting into MongoDB',
-                error
+            res.status(400).json({
+                message
             });
         }
     };
@@ -79,10 +79,10 @@ export class BookingController {
             res.status(200).json(updatedBooking);
 
         } catch (error) {
+            const message = error instanceof Error ? error.message : 'Unknown error';
 
-            res.status(500).json({
-                message: 'Error updating booking',
-                error
+            res.status(400).json({
+                message
             });
         }
     };
