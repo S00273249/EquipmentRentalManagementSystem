@@ -26,6 +26,45 @@ const maintenanceSchema = new Schema<IMaintenanceRecord>(
     { timestamps: true }
 );
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     MaintenanceRecord:
+ *       type: object
+ *       required:
+ *         - equipmentId
+ *         - maintenanceType
+ *         - description
+ *         - startDate
+ *         - endDate
+ *         - cost
+ *         - notes
+ *       properties:
+ *         equipmentId:
+ *           type: string
+ *           example: 68e123456789abcdef654321
+ *         maintenanceType:
+ *           type: string
+ *           example: Repair
+ *         description:
+ *           type: string
+ *           example: Replace damaged lens
+ *         startDate:
+ *           type: string
+ *           format: date
+ *           example: 2026-10-20
+ *         endDate:
+ *           type: string
+ *           format: date
+ *           example: 2026-10-22
+ *         cost:
+ *           type: number
+ *           example: 75
+ *         notes:
+ *           type: string
+ *           example: Equipment unavailable during repair
+ */
 // Create the Maintenance Record model using the schema
 export const MaintenanceModel = model<IMaintenanceRecord>(
     'MaintenanceRecord',

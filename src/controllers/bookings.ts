@@ -7,6 +7,36 @@ export class BookingController {
 
     // #region Get All Bookings
 
+    /**
+     * @openapi
+     * /bookings:
+     *   get:
+     *     summary: Get all bookings
+     *     tags:
+     *       - Bookings
+     *     parameters:
+     *       - name: customerId
+     *         in: query
+     *         required: false
+     *         schema:
+     *           type: string
+     *         description: Filter bookings by customer ID
+     *       - name: equipmentId
+     *         in: query
+     *         required: false
+     *         schema:
+     *           type: string
+     *         description: Filter bookings by equipment ID
+     *       - name: status
+     *         in: query
+     *         required: false
+     *         schema:
+     *           type: string
+     *         description: Filter bookings by booking status
+     *     responses:
+     *       200:
+     *         description: List of bookings
+     */
     // Get all bookings
     getBookings = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -40,6 +70,25 @@ export class BookingController {
 
     // #region Get Booking By ID
 
+    /**
+     * @openapi
+     * /bookings/{id}:
+     *   get:
+     *     summary: Get a booking by ID
+     *     tags:
+     *       - Bookings
+     *     parameters:
+     *       - name: id
+     *         in: path
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: Booking found
+     *       404:
+     *         description: Booking not found
+     */
     // Get a booking by ID
     getBookingById = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -73,6 +122,25 @@ export class BookingController {
 
     // #region Create Booking
 
+    /**
+     * @openapi
+     * /bookings:
+     *   post:
+     *     summary: Create a new booking
+     *     tags:
+     *       - Bookings
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/Booking'
+     *     responses:
+     *       201:
+     *         description: Booking created successfully
+     *       400:
+     *         description: Invalid booking data or booking conflict
+     */
     // Create a new booking
     createBooking = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -93,6 +161,33 @@ export class BookingController {
 
     // #region Update Booking
 
+    /**
+     * @openapi
+     * /bookings/{id}:
+     *   put:
+     *     summary: Update a booking
+     *     tags:
+     *       - Bookings
+     *     parameters:
+     *       - name: id
+     *         in: path
+     *         required: true
+     *         schema:
+     *           type: string
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/Booking'
+     *     responses:
+     *       200:
+     *         description: Booking updated successfully
+     *       400:
+     *         description: Invalid booking data or booking conflict
+     *       404:
+     *         description: Booking not found
+     */
     // Update an existing booking
     updateBooking = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -122,6 +217,25 @@ export class BookingController {
 
     // #region Delete Booking
 
+    /**
+     * @openapi
+     * /bookings/{id}:
+     *   delete:
+     *     summary: Delete a booking
+     *     tags:
+     *       - Bookings
+     *     parameters:
+     *       - name: id
+     *         in: path
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: Booking deleted successfully
+     *       404:
+     *         description: Booking not found
+     */
     // Delete a booking by ID
     deleteBooking = async (req: Request, res: Response): Promise<void> => {
         try {

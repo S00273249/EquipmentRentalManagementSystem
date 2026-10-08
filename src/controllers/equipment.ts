@@ -5,6 +5,19 @@ const equipmentService = new EquipmentService();
 
 export class EquipmentController {
 
+    // #region GetAllEquipment
+
+    /**
+     * @openapi
+     * /equipment:
+     *   get:
+     *     summary: Get all equipment
+     *     tags:
+     *       - Equipment
+     *     responses:
+     *       200:
+     *         description: List of equipment
+     */
     // Get all equipment
     getEquipment = async (_req: Request, res: Response): Promise<void> => {
         try {
@@ -21,6 +34,29 @@ export class EquipmentController {
         }
     };
 
+    // #endregion
+
+    // #region GetEquipmentById
+
+    /**
+     * @openapi
+     * /equipment/{id}:
+     *   get:
+     *     summary: Get equipment by ID
+     *     tags:
+     *       - Equipment
+     *     parameters:
+     *       - name: id
+     *         in: path
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: Equipment found
+     *       404:
+     *         description: Equipment not found
+     */
     // Get equipment by ID
     getEquipmentById = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -46,6 +82,29 @@ export class EquipmentController {
         }
     };
 
+    // #endregion
+
+    // #region CreateEquipment
+
+    /**
+     * @openapi
+     * /equipment:
+     *   post:
+     *     summary: Create new equipment
+     *     tags:
+     *       - Equipment
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/Equipment'
+     *     responses:
+     *       201:
+     *         description: Equipment created successfully
+     *       400:
+     *         description: Validation failed
+     */
     // Create new equipment
     createEquipment = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -62,6 +121,37 @@ export class EquipmentController {
         }
     };
 
+    // #endregion
+
+    // #region UpdateEquipment
+
+    /**
+     * @openapi
+     * /equipment/{id}:
+     *   put:
+     *     summary: Update equipment
+     *     tags:
+     *       - Equipment
+     *     parameters:
+     *       - name: id
+     *         in: path
+     *         required: true
+     *         schema:
+     *           type: string
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/Equipment'
+     *     responses:
+     *       200:
+     *         description: Equipment updated successfully
+     *       400:
+     *         description: Validation failed
+     *       404:
+     *         description: Equipment not found
+     */
     // Update existing equipment
     updateEquipment = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -87,6 +177,29 @@ export class EquipmentController {
         }
     };
 
+    // #endregion
+
+    // #region DeleteEquipment
+
+    /**
+     * @openapi
+     * /equipment/{id}:
+     *   delete:
+     *     summary: Delete equipment
+     *     tags:
+     *       - Equipment
+     *     parameters:
+     *       - name: id
+     *         in: path
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: Equipment deleted successfully
+     *       404:
+     *         description: Equipment not found
+     */
     // Delete equipment
     deleteEquipment = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -112,6 +225,48 @@ export class EquipmentController {
         }
     };
 
+    // #endregion
+
+    // #region GetFilteredEquipment
+
+    /**
+     * @openapi
+     * /equipment/search:
+     *   get:
+     *     summary: Search and filter equipment
+     *     tags:
+     *       - Equipment
+     *     parameters:
+     *       - name: category
+     *         in: query
+     *         required: false
+     *         schema:
+     *           type: string
+     *         description: Filter equipment by category
+     *       - name: status
+     *         in: query
+     *         required: false
+     *         schema:
+     *           type: string
+     *         description: Filter equipment by status
+     *       - name: condition
+     *         in: query
+     *         required: false
+     *         schema:
+     *           type: string
+     *         description: Filter equipment by condition
+     *       - name: sort
+     *         in: query
+     *         required: false
+     *         schema:
+     *           type: string
+     *           enum:
+     *             - dailyRate
+     *         description: Sort equipment by daily rental rate
+     *     responses:
+     *       200:
+     *         description: Filtered list of equipment
+     */
     // Get filtered equipment
     getFilteredEquipment = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -146,6 +301,38 @@ export class EquipmentController {
         }
     };
 
+    // #endregion
+
+    // #region GetAvailableEquipment
+
+    /**
+     * @openapi
+     * /equipment/available:
+     *   get:
+     *     summary: Get equipment available for a date range
+     *     tags:
+     *       - Equipment
+     *     parameters:
+     *       - name: from
+     *         in: query
+     *         required: true
+     *         schema:
+     *           type: string
+     *           format: date
+     *         description: Start date of the rental period
+     *       - name: to
+     *         in: query
+     *         required: true
+     *         schema:
+     *           type: string
+     *           format: date
+     *         description: End date of the rental period
+     *     responses:
+     *       200:
+     *         description: List of equipment available for the requested period
+     *       400:
+     *         description: Invalid or missing dates
+     */
     // Get available equipment within a specified date range
     getAvailableEquipment = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -184,5 +371,7 @@ export class EquipmentController {
             });
         }
     };
+
+    // #endregion
 
 }

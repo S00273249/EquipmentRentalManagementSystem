@@ -24,6 +24,39 @@ const equipmentSchema = new Schema<IEquipment>(
     { timestamps: true }
 );
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Equipment:
+ *       type: object
+ *       required:
+ *         - name
+ *         - category
+ *         - description
+ *         - dailyRate
+ *         - status
+ *         - condition
+ *       properties:
+ *         name:
+ *           type: string
+ *           example: Canon EOS Camera
+ *         category:
+ *           type: string
+ *           example: Camera
+ *         description:
+ *           type: string
+ *           example: Professional DSLR camera
+ *         dailyRate:
+ *           type: number
+ *           example: 50
+ *         status:
+ *           type: string
+ *           example: Available
+ *         condition:
+ *           type: string
+ *           example: Good
+ */
 // Create the Equipment model using the schema
 export const EquipmentModel = model<IEquipment>('Equipment', equipmentSchema);
 

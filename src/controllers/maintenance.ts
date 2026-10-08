@@ -7,6 +7,24 @@ export class MaintenanceController {
 
     // #region Get All Maintenance Records
 
+    /**
+     * @openapi
+     * /maintenance:
+     *   get:
+     *     summary: Get all maintenance records
+     *     tags:
+     *       - Maintenance
+     *     parameters:
+     *       - name: equipmentId
+     *         in: query
+     *         required: false
+     *         schema:
+     *           type: string
+     *         description: Filter maintenance records by equipment ID
+     *     responses:
+     *       200:
+     *         description: List of maintenance records
+     */
     // Get all maintenance records
     getMaintenanceRecords = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -35,6 +53,25 @@ export class MaintenanceController {
 
     // #region Get Maintenance Record By ID
 
+    /**
+     * @openapi
+     * /maintenance/{id}:
+     *   get:
+     *     summary: Get a maintenance record by ID
+     *     tags:
+     *       - Maintenance
+     *     parameters:
+     *       - name: id
+     *         in: path
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: Maintenance record found
+     *       404:
+     *         description: Maintenance record not found
+     */
     // Get a maintenance record by ID
     getMaintenanceRecordById = async (
         req: Request,
@@ -71,6 +108,25 @@ export class MaintenanceController {
 
     // #region Create Records
 
+    /**
+     * @openapi
+     * /maintenance:
+     *   post:
+     *     summary: Create a new maintenance record
+     *     tags:
+     *       - Maintenance
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/MaintenanceRecord'
+     *     responses:
+     *       201:
+     *         description: Maintenance record created successfully
+     *       400:
+     *         description: Validation failed
+     */
     // Create a new maintenance record
     createMaintenanceRecord = async (
         req: Request,
@@ -96,6 +152,33 @@ export class MaintenanceController {
 
     // #region Update Records
 
+    /**
+     * @openapi
+     * /maintenance/{id}:
+     *   put:
+     *     summary: Update a maintenance record
+     *     tags:
+     *       - Maintenance
+     *     parameters:
+     *       - name: id
+     *         in: path
+     *         required: true
+     *         schema:
+     *           type: string
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/MaintenanceRecord'
+     *     responses:
+     *       200:
+     *         description: Maintenance record updated successfully
+     *       400:
+     *         description: Validation failed
+     *       404:
+     *         description: Maintenance record not found
+     */
     // Update an existing maintenance record
     updateMaintenanceRecord = async (
         req: Request,
@@ -135,6 +218,25 @@ export class MaintenanceController {
 
     // #region Delete Records
 
+    /**
+     * @openapi
+     * /maintenance/{id}:
+     *   delete:
+     *     summary: Delete a maintenance record
+     *     tags:
+     *       - Maintenance
+     *     parameters:
+     *       - name: id
+     *         in: path
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: Maintenance record deleted successfully
+     *       404:
+     *         description: Maintenance record not found
+     */
     // Delete a maintenance record by ID
     deleteMaintenanceRecord = async (
         req: Request,

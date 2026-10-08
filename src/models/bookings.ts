@@ -32,6 +32,43 @@ const bookingSchema = new Schema<IBooking>(
     { timestamps: true }
 );
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Booking:
+ *       type: object
+ *       required:
+ *         - customerId
+ *         - equipmentId
+ *         - startDate
+ *         - endDate
+ *         - status
+ *       properties:
+ *         customerId:
+ *           type: string
+ *           example: 68e123456789abcdef123456
+ *         equipmentId:
+ *           type: string
+ *           example: 68e123456789abcdef654321
+ *         startDate:
+ *           type: string
+ *           format: date
+ *           example: 2026-10-10
+ *         endDate:
+ *           type: string
+ *           format: date
+ *           example: 2026-10-15
+ *         status:
+ *           type: string
+ *           example: Pending
+ *         dailyRate:
+ *           type: number
+ *           example: 50
+ *         totalCost:
+ *           type: number
+ *           example: 250
+ */
 // Create the Booking model using the defined schema
 export const BookingModel = model<IBooking>('Booking', bookingSchema);
 

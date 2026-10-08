@@ -20,6 +20,32 @@ const customerSchema = new Schema<ICustomer>(
     { timestamps: true }
 );
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Customer:
+ *       type: object
+ *       required:
+ *         - name
+ *         - email
+ *         - phone
+ *         - address
+ *       properties:
+ *         name:
+ *           type: string
+ *           example: John Smith
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: john@example.com
+ *         phone:
+ *           type: string
+ *           example: 0871234567
+ *         address:
+ *           type: string
+ *           example: Sligo, Ireland
+ */
 // Create the Customer model using the schema
 export const CustomerModel = model<ICustomer>('Customer', customerSchema);
 
