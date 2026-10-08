@@ -16,3 +16,9 @@ export const connectDB = async (): Promise<void> => {
     process.exit(1);
   }
 };
+
+// Disconnect from MongoDB
+export const disconnectDB = async (): Promise<void> => {
+  await mongoose.disconnect();
+}
+

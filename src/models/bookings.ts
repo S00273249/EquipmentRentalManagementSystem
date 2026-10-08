@@ -16,6 +16,19 @@ export interface IBooking {
 
 // #endregion
 
+// #region Booking Statuses
+
+// Define the possible statuses for a booking
+const bookingStatuses = [
+    "Pending",
+    "Confirmed",
+    "Active",
+    "Completed",
+    "Cancelled"
+] as const;
+
+// #endregion
+
 // #region Booking Schema and Model
 
 // Define the Mongoose schema for the Booking model
@@ -25,7 +38,11 @@ const bookingSchema = new Schema<IBooking>(
         equipmentId: { type: String, required: true },
         startDate: { type: Date, required: true },
         endDate: { type: Date, required: true },
-        status: { type: String, required: true },
+        status: {
+            type: String,
+            required: true,
+            enum: bookingStatuses
+        },
         dailyRate: { type: Number, required: true },
         totalCost: { type: Number, required: true },
     },
@@ -82,7 +99,7 @@ export const createBookingZSchema = z.object({
     equipmentId: z.string().min(1),
     startDate: z.coerce.date(),
     endDate: z.coerce.date(),
-    status: z.string().min(1),
+    status: z.enum(bookingStatuses),
 });
 
 // Define Zod schema for updating booking data, allowing optional fields
@@ -91,7 +108,7 @@ export const updateBookingZSchema = z.object({
     equipmentId: z.string().min(1).optional(),
     startDate: z.coerce.date().optional(),
     endDate: z.coerce.date().optional(),
-    status: z.string().min(1).optional(),
+    status: z.enum(bookingStatuses),
 });
 
 // #endregion
