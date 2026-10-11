@@ -1,7 +1,11 @@
 @endpoint = http://localhost:3000/api/v1/equipment
 
+
+@existingEquipmentId = 6ac9105fc55f94b913b89731
+
+
 ###
-# Create equipment
+# 1. Create equipment - valid POST
 # @name postEquipment
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
@@ -16,8 +20,14 @@ x-api-key: blahblah
     "condition": "Good"
 }
 
+
 ###
-# Missing name
+# Reference the equipment created by the valid POST
+@newEquipment = {{postEquipment.response.body._id}}
+
+
+###
+# 2. Create equipment - missing name (invalid POST)
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
@@ -30,8 +40,9 @@ x-api-key: blahblah
     "condition": "Good"
 }
 
+
 ###
-# Empty name
+# Additional invalid POST - empty name
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
@@ -45,28 +56,30 @@ x-api-key: blahblah
     "condition": "Good"
 }
 
+
 ###
-# Missing daily rate
+# Additional invalid POST - missing daily rate
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
 {
-    "name": "Canon EOS Camera",
+    "name": "Camera Without Rate",
     "category": "Camera",
     "description": "Professional digital camera",
     "status": "Available",
     "condition": "Good"
 }
 
+
 ###
-# Invalid daily rate
+# Additional invalid POST - negative daily rate
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
 {
-    "name": "Canon EOS Camera",
+    "name": "Camera With Invalid Rate",
     "category": "Camera",
     "description": "Professional digital camera",
     "dailyRate": -10,
@@ -74,14 +87,15 @@ x-api-key: blahblah
     "condition": "Good"
 }
 
+
 ###
-# Wrong type for daily rate
+# Additional invalid POST - daily rate has the wrong type
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
 {
-    "name": "Canon EOS Camera",
+    "name": "Camera With Wrong Rate Type",
     "category": "Camera",
     "description": "Professional digital camera",
     "dailyRate": "50",
@@ -89,49 +103,67 @@ x-api-key: blahblah
     "condition": "Good"
 }
 
-###
-@newEquipment = {{postEquipment.response.body._id}}
 
 ###
-# Get equipment by ID
-GET {{endpoint}}/{{newEquipment}} HTTP/1.1
-content-type: application/json
-x-api-key: blahblah
-
-###
-# Get all equipment
+# 3. Get all equipment
 GET {{endpoint}} HTTP/1.1
-content-type: application/json
 x-api-key: blahblah
 
+
 ###
-# Valid update - all fields
-PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
+# 4. Get equipment by ID - successful GET
+GET {{endpoint}}/{{newEquipment}} HTTP/1.1
+x-api-key: blahblah
+
+
+###
+# 5. Get nonexistent equipment - failed GET
+GET {{endpoint}}/000000000000000000000000 HTTP/1.1
+x-api-key: blahblah
+
+
+###
+# 6. Delete equipment - successful DELETE
+DELETE {{endpoint}}/{{newEquipment}} HTTP/1.1
+x-api-key: blahblah
+
+
+###
+# 7. Delete nonexistent equipment - failed DELETE
+DELETE {{endpoint}}/000000000000000000000000 HTTP/1.1
+x-api-key: blahblah
+
+
+###
+# 8. Update existing equipment - valid PUT with all fields
+PUT {{endpoint}}/{{existingEquipmentId}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
 {
-    "name": "Canon EOS R5",
+    "name": "Updated Equipment Name",
     "category": "Camera",
-    "description": "Professional mirrorless camera",
+    "description": "Updated equipment description",
     "dailyRate": 75,
     "status": "Available",
     "condition": "Excellent"
 }
 
+
 ###
-# Valid update - name only
-PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
+# Additional valid PUT - update name only
+PUT {{endpoint}}/{{existingEquipmentId}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
 {
-    "name": "Canon EOS R6"
+    "name": "Updated Equipment Name"
 }
 
+
 ###
-# Valid update - daily rate only
-PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
+# Additional valid PUT - update daily rate only
+PUT {{endpoint}}/{{existingEquipmentId}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
@@ -139,19 +171,21 @@ x-api-key: blahblah
     "dailyRate": 60
 }
 
+
 ###
-# Invalid update - empty name
-PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
+# 9. Update nonexistent equipment - failed PUT
+PUT {{endpoint}}/000000000000000000000000 HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
 {
-    "name": ""
+    "name": "Nonexistent Equipment"
 }
 
+
 ###
-# Invalid update - negative daily rate
-PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
+# 10. Update equipment - invalid PUT with negative daily rate
+PUT {{endpoint}}/{{existingEquipmentId}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
@@ -159,9 +193,21 @@ x-api-key: blahblah
     "dailyRate": -20
 }
 
+
 ###
-# Invalid update - daily rate is a string
-PUT {{endpoint}}/{{newEquipment}} HTTP/1.1
+# Additional invalid PUT - empty name
+PUT {{endpoint}}/{{existingEquipmentId}} HTTP/1.1
+content-type: application/json
+x-api-key: blahblah
+
+{
+    "name": ""
+}
+
+
+###
+# Additional invalid PUT - daily rate has the wrong type
+PUT {{endpoint}}/{{existingEquipmentId}} HTTP/1.1
 content-type: application/json
 x-api-key: blahblah
 
@@ -169,53 +215,56 @@ x-api-key: blahblah
     "dailyRate": "60"
 }
 
-###
-# Filter equipment by category
-GET {{endpoint}}/search?category=Camera HTTP/1.1
-x-api-key: blahblah
 
 ###
-# Filter equipment by status
-GET {{endpoint}}/search?status=Available HTTP/1.1
-x-api-key: blahblah
-
-###
-# Filter equipment by condition
-GET {{endpoint}}/search?condition=Good HTTP/1.1
-x-api-key: blahblah
-
-###
-# Filter equipment by multiple fields
+# 11. Filter equipment by category and status
 GET {{endpoint}}/search?category=Camera&status=Available HTTP/1.1
 x-api-key: blahblah
 
+
 ###
-# Sort equipment by daily rate
+# Additional filter - category
+GET {{endpoint}}/search?category=Camera HTTP/1.1
+x-api-key: blahblah
+
+
+###
+# Additional filter - status
+GET {{endpoint}}/search?status=Available HTTP/1.1
+x-api-key: blahblah
+
+
+###
+# Additional filter - condition
+GET {{endpoint}}/search?condition=Good HTTP/1.1
+x-api-key: blahblah
+
+
+###
+# 12. Sort equipment by daily rate
 GET {{endpoint}}/search?sort=dailyRate HTTP/1.1
 x-api-key: blahblah
 
-###
-# Find available equipment for a rental period
-GET {{endpoint}}/available?from=2026-10-10&to=2026-10-15 HTTP/1.1
-x-api-key: blahblah
 
 ###
-# Invalid availability dates
-GET {{endpoint}}/available?from=2026-10-15&to=2026-10-10 HTTP/1.1
-x-api-key: blahblah
-
-###
-# Invalid availability date format
-GET {{endpoint}}/available?from=not-a-date&to=2026-10-15 HTTP/1.1
-x-api-key: blahblah
-
-###
-# Search equipment with no filters
+# Search equipment without filters
 GET {{endpoint}}/search HTTP/1.1
 x-api-key: blahblah
 
+
 ###
-# Delete equipment
-DELETE {{endpoint}}/{{newEquipment}} HTTP/1.1
-content-type: application/json
+# 13. Find available equipment for a rental period
+GET {{endpoint}}/available?from=2026-10-10&to=2026-10-15 HTTP/1.1
+x-api-key: blahblah
+
+
+###
+# Invalid availability dates - end date before start date
+GET {{endpoint}}/available?from=2026-10-15&to=2026-10-10 HTTP/1.1
+x-api-key: blahblah
+
+
+###
+# Invalid availability dates - incorrect date format
+GET {{endpoint}}/available?from=not-a-date&to=2026-10-15 HTTP/1.1
 x-api-key: blahblah
