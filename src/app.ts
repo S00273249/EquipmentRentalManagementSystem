@@ -5,8 +5,14 @@ import bookingRoutes from "./routes/bookings.js";
 import maintenanceRoutes from "./routes/maintenance.js";
 import { swaggerSpec } from './config/swagger.js';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 
 const app = express();
+
+// Allow requests from the Angular frontend
+app.use(cors({
+    origin: 'http://localhost:4200'
+}));
 
 app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
