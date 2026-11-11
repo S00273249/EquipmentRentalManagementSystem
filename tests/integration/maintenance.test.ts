@@ -1,3 +1,4 @@
+
 import request from "supertest";
 import { app } from "../../src/app.js";
 
@@ -137,7 +138,8 @@ describe("Maintenance API", () => {
     });
 
     // Test that equipment with overlapping maintenance is excluded from available equipment
-    it("GET /equipment/available - excludes equipment with overlapping maintenance", async () => {
+    it("GET /equipment?from&to - excludes equipment with overlapping maintenance", async () => {
+
         // Create equipment
         const equipmentResponse = await request(app)
             .post("/api/v1/equipment")
@@ -173,7 +175,7 @@ describe("Maintenance API", () => {
 
         // Check availability during maintenance
         const response = await request(app)
-            .get("/api/v1/equipment/available?from=2026-12-12&to=2026-12-14")
+            .get("/api/v1/equipment?from=2026-12-12&to=2026-12-14")
             .set("x-api-key", apiKey);
 
         expect(response.status).toBe(200);

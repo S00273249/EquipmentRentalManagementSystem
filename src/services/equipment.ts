@@ -103,4 +103,49 @@ export class EquipmentService {
         }).lean();
     }
 
+    // Get equipment using the available filters and optional date range
+    async getEquipment(filters: {
+        category?: string;
+        status?: string;
+        condition?: string;
+        sort?: string;
+        from?: Date;
+        to?: Date;
+    }): Promise<IEquipment[]> {
+
+        // If a date range is provided, retrieve equipment available during that period
+        if (filters.from && filters.to) {
+
+            let equipment = await this.getAvailableEquipment(filters.from, filters.to);
+
+            // Apply additional filters to the available equipment
+            if (filters.category) {
+                equipment = equipment.filter(item => item.category === filters.category);
+            }
+
+            if (filters.status) {
+                equipment = equipment.filter(item => item.status === filters.status);
+            }
+
+            if (filters.condition) {
+                equipment = equipment.filter(item => item.condition === filters.condition);
+            }
+
+            // Sort by daily rate if requested
+            if (filters.sort === 'dailyRate') {
+                equipment.sort((a, b) => a.dailyRate - b.dailyRate);
+            }
+
+            return equipment;
+        }
+
+        // If filters are provided without a date range, retrieve filtered equipment
+        if (filters.category || filters.status || filters.condition || filters.sort) {
+            return await this.getFilteredEquipment(filters);
+        }
+
+        // If no filters or dates are provided, retrieve all equipment
+        return await this.getAllEquipment();
+    }
+
 }

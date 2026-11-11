@@ -1,3 +1,4 @@
+
 import request from "supertest";
 import { app } from "../../src/app.js";
 
@@ -114,10 +115,10 @@ describe("Equipment API", () => {
     });
 
     // Test that equipment can be filtered by category
-    it("GET /equipment/search?category=Camera - filters by category", async () => {
+    it("GET /equipment?category=Camera - filters by category", async () => {
 
         const response = await request(app)
-            .get("/api/v1/equipment/search?category=Camera")
+            .get("/api/v1/equipment?category=Camera")
             .set("x-api-key", apiKey);
 
         expect(response.status).toBe(200);
@@ -130,10 +131,10 @@ describe("Equipment API", () => {
     });
 
     // Test that equipment can be filtered by status
-    it("GET /equipment/search?status=Available - filters by status", async () => {
+    it("GET /equipment?status=Available - filters by status", async () => {
 
         const response = await request(app)
-            .get("/api/v1/equipment/search?status=Available")
+            .get("/api/v1/equipment?status=Available")
             .set("x-api-key", apiKey);
 
         expect(response.status).toBe(200);
@@ -146,10 +147,10 @@ describe("Equipment API", () => {
     });
 
     // Test that equipment can be filtered by condition
-    it("GET /equipment/search?condition=Good - filters by condition", async () => {
+    it("GET /equipment?condition=Good - filters by condition", async () => {
 
         const response = await request(app)
-            .get("/api/v1/equipment/search?condition=Good")
+            .get("/api/v1/equipment?condition=Good")
             .set("x-api-key", apiKey);
 
         expect(response.status).toBe(200);
@@ -162,10 +163,10 @@ describe("Equipment API", () => {
     });
 
     // Test that equipment can be sorted by daily rate
-    it("GET /equipment/search?sort=dailyRate - sorts by daily rate", async () => {
+    it("GET /equipment?sort=dailyRate - sorts by daily rate", async () => {
 
         const response = await request(app)
-            .get("/api/v1/equipment/search?sort=dailyRate")
+            .get("/api/v1/equipment?sort=dailyRate")
             .set("x-api-key", apiKey);
 
         expect(response.status).toBe(200);
@@ -179,10 +180,10 @@ describe("Equipment API", () => {
     });
 
     // Test that available equipment can be retrieved for a given date range
-    it("GET /equipment/available - returns available equipment", async () => {
+    it("GET /equipment?from&to - returns available equipment", async () => {
 
         const response = await request(app)
-            .get("/api/v1/equipment/available?from=2026-10-10&to=2026-10-15")
+            .get("/api/v1/equipment?from=2026-12-10&to=2026-12-15")
             .set("x-api-key", apiKey);
 
         expect(response.status).toBe(200);
@@ -192,6 +193,43 @@ describe("Equipment API", () => {
         response.body.forEach((equipment: { status: string }) => {
             expect(equipment.status).not.toBe("Retired");
         });
+    });
+
+    // Test that equipment can be filtered by category and date availability
+    it("GET /equipment?category&from&to - filters available equipment by category", async () => {
+
+        const response = await request(app)
+            .get("/api/v1/equipment?category=Camera&from=2026-12-10&to=2026-12-15")
+            .set("x-api-key", apiKey);
+
+        expect(response.status).toBe(200);
+
+        expect(Array.isArray(response.body)).toBe(true);
+
+        response.body.forEach((equipment: { category: string; status: string }) => {
+            expect(equipment.category).toBe("Camera");
+            expect(equipment.status).not.toBe("Retired");
+        });
+    });
+
+    // Test that an incomplete date range is rejected
+    it("GET /equipment?from - rejects an incomplete date range", async () => {
+
+        const response = await request(app)
+            .get("/api/v1/equipment?from=2026-12-10")
+            .set("x-api-key", apiKey);
+
+        expect(response.status).toBe(400);
+    });
+
+    // Test that an invalid date range is rejected
+    it("GET /equipment?from&to - rejects an invalid date range", async () => {
+
+        const response = await request(app)
+            .get("/api/v1/equipment?from=2026-12-20&to=2026-12-10")
+            .set("x-api-key", apiKey);
+
+        expect(response.status).toBe(400);
     });
 
     // Test that retrieving a non-existent equipment returns 404
