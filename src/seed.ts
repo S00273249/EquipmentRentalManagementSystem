@@ -1,11 +1,10 @@
-
 import mongoose from "mongoose";
-import { env } from "./config/.env.js";
-import { connectDB } from "./config/database/database.js";
-import { CustomerModel } from "./models/customers.js";
-import { EquipmentModel } from "./models/equipment.js";
-import { BookingModel } from "./models/bookings.js";
-import { MaintenanceModel } from "./models/maintenance.js";
+import { env } from "./config/.env";
+import { connectDB } from "./config/database/database";
+import { CustomerModel } from "./models/customers";
+import { EquipmentModel } from "./models/equipment";
+import { BookingModel } from "./models/bookings";
+import { MaintenanceModel } from "./models/maintenance";
 
 // Seed the database with test data
 const seedDatabase = async (): Promise<void> => {

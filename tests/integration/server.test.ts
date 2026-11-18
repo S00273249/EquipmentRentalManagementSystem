@@ -1,5 +1,5 @@
 import request from "supertest";
-import { app } from "../../src/app.js";
+import { app } from "../../src/app";
 
 // Integration test for the /ping endpoint
 describe("GET /ping", () => {

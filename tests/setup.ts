@@ -1,4 +1,4 @@
-import { connectDB, disconnectDB } from "../src/config/database/database.js";
+import { connectDB, disconnectDB } from "../src/config/database/database";
 
 // Run once before all tests
 beforeAll(async () => {

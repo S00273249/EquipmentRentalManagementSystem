@@ -1,6 +1,6 @@
-import { EquipmentModel, IEquipment } from '../models/equipment.js';
-import { BookingModel } from '../models/bookings.js';
-import { MaintenanceModel } from '../models/maintenance.js';
+import { EquipmentModel, IEquipment } from '../models/equipment';
+import { BookingModel } from '../models/bookings';
+import { MaintenanceModel } from '../models/maintenance';
 import { HydratedDocument } from 'mongoose';
 
 export class EquipmentService {

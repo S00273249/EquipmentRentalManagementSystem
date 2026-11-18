@@ -1,9 +1,9 @@
 import express from "express";
 import customerRoutes from "./routes/customers";
-import equipmentRoutes from "./routes/equipment.js";
-import bookingRoutes from "./routes/bookings.js";
-import maintenanceRoutes from "./routes/maintenance.js";
-import { swaggerSpec } from './config/swagger.js';
+import equipmentRoutes from "./routes/equipment";
+import bookingRoutes from "./routes/bookings";
+import maintenanceRoutes from "./routes/maintenance";
+import { swaggerSpec } from './config/swagger';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 

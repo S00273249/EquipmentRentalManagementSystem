@@ -1,4 +1,4 @@
-import { createBookingZSchema } from "../../src/models/bookings.js";
+import { createBookingZSchema } from "../../src/models/bookings";
 
 // Valid booking data for testing
 const validBooking = {

@@ -1,4 +1,4 @@
-import { createCustomerZSchema } from "../../src/models/customers.js";
+import { createCustomerZSchema } from "../../src/models/customers";
 
 // Sample valid customer data for testing
 const validCustomer = {

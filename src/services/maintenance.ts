@@ -1,4 +1,4 @@
-import { MaintenanceModel, IMaintenanceRecord } from '../models/maintenance.js';
+import { MaintenanceModel, IMaintenanceRecord } from '../models/maintenance';
 import { HydratedDocument } from 'mongoose';
 
 export class MaintenanceService {

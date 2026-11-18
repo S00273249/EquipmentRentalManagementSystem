@@ -1,4 +1,4 @@
-import { CustomerModel, ICustomer } from '../models/customers.js';
+import { CustomerModel, ICustomer } from '../models/customers';
 import { HydratedDocument } from 'mongoose';
 
 export class CustomerService {

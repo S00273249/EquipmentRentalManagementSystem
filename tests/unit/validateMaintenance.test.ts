@@ -1,4 +1,4 @@
-import { createMaintenanceZSchema } from "../../src/models/maintenance.js";
+import { createMaintenanceZSchema } from "../../src/models/maintenance";
 
 // Valid maintenance data for testing
 const validMaintenance = {

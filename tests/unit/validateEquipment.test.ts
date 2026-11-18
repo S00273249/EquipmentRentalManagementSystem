@@ -1,4 +1,4 @@
-import { createEquipmentZSchema } from "../../src/models/equipment.js";
+import { createEquipmentZSchema } from "../../src/models/equipment";
 
 // Valid equipment data for testing
 const validEquipment = {

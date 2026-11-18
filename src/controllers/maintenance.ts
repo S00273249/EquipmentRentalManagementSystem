@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { MaintenanceService } from '../services/maintenance.js';
+import { MaintenanceService } from '../services/maintenance';
 
 const maintenanceService = new MaintenanceService();
 

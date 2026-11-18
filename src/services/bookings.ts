@@ -1,7 +1,7 @@
-import { BookingModel, IBooking } from '../models/bookings.js';
-import { CustomerModel } from '../models/customers.js';
-import { EquipmentModel } from '../models/equipment.js';
-import { MaintenanceModel } from '../models/maintenance.js';
+import { BookingModel, IBooking } from '../models/bookings';
+import { CustomerModel } from '../models/customers';
+import { EquipmentModel } from '../models/equipment';
+import { MaintenanceModel } from '../models/maintenance';
 import { HydratedDocument } from 'mongoose';
 
 export class BookingService {

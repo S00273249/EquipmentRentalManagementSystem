@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { BookingController } from '../controllers/bookings.js';
-import { authenticateKey } from '../middleware/authentication.middleware.js';
-import { validate } from '../middleware/validate.middleware.js';
-import { createBookingZSchema, updateBookingZSchema } from '../models/bookings.js';
+import { BookingController } from '../controllers/bookings';
+import { authenticateKey } from '../middleware/authentication.middleware';
+import { validate } from '../middleware/validate.middleware';
+import { createBookingZSchema, updateBookingZSchema } from '../models/bookings';
 
 // Create a new router instance for booking routes
 const router = Router();
