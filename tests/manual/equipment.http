@@ -218,53 +218,65 @@ x-api-key: blahblah
 
 ###
 # 11. Filter equipment by category and status
-GET {{endpoint}}/search?category=Camera&status=Available HTTP/1.1
+GET {{endpoint}}?category=Camera&status=Available HTTP/1.1
 x-api-key: blahblah
 
 
 ###
 # Additional filter - category
-GET {{endpoint}}/search?category=Camera HTTP/1.1
+GET {{endpoint}}?category=Camera HTTP/1.1
 x-api-key: blahblah
 
 
 ###
 # Additional filter - status
-GET {{endpoint}}/search?status=Available HTTP/1.1
+GET {{endpoint}}?status=Available HTTP/1.1
 x-api-key: blahblah
 
 
 ###
 # Additional filter - condition
-GET {{endpoint}}/search?condition=Good HTTP/1.1
+GET {{endpoint}}?condition=Good HTTP/1.1
 x-api-key: blahblah
 
 
 ###
 # 12. Sort equipment by daily rate
-GET {{endpoint}}/search?sort=dailyRate HTTP/1.1
+GET {{endpoint}}?sort=dailyRate HTTP/1.1
 x-api-key: blahblah
 
 
 ###
 # Search equipment without filters
-GET {{endpoint}}/search HTTP/1.1
+GET {{endpoint}} HTTP/1.1
 x-api-key: blahblah
 
 
 ###
 # 13. Find available equipment for a rental period
-GET {{endpoint}}/available?from=2026-10-10&to=2026-10-15 HTTP/1.1
+GET {{endpoint}}?from=2026-10-10&to=2026-10-15 HTTP/1.1
+x-api-key: blahblah
+
+
+###
+# Find available cameras for a rental period
+GET {{endpoint}}?category=Camera&from=2026-10-10&to=2026-10-15 HTTP/1.1
 x-api-key: blahblah
 
 
 ###
 # Invalid availability dates - end date before start date
-GET {{endpoint}}/available?from=2026-10-15&to=2026-10-10 HTTP/1.1
+GET {{endpoint}}?from=2026-10-15&to=2026-10-10 HTTP/1.1
 x-api-key: blahblah
 
 
 ###
 # Invalid availability dates - incorrect date format
-GET {{endpoint}}/available?from=not-a-date&to=2026-10-15 HTTP/1.1
+GET {{endpoint}}?from=not-a-date&to=2026-10-15 HTTP/1.1
+x-api-key: blahblah
+
+
+###
+# Invalid availability dates - only start date provided
+GET {{endpoint}}?from=2026-10-10 HTTP/1.1
 x-api-key: blahblah
